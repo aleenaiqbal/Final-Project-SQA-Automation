@@ -1,3 +1,4 @@
+import pytest
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.common.by import By
 import pytest_check as check
@@ -62,6 +63,8 @@ class TestHomePage:
         self.view_all_blog_post = '//*[@id="blogPreview"]/a'
         self.wait.until(EC.visibility_of_element_located((By.XPATH,self.view_all_blog_post))).click()
         assert "blog" in self.driver.current_url
+
+
 
 
 
