@@ -1,6 +1,9 @@
+import time
+
 import pytest
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import pytest_check as check
@@ -26,12 +29,31 @@ class TestProductPage:
         self.driver.get(self.base_url)
         assert "catalog" in self.driver.current_url
 
-    @pytest.mark.product
+    @pytest.mark.addproduct
 
     def test_click_first_product(self):
         self.driver.get(self.base_url)
         self.ViewDetails = '//span[text()="View details"]'
         self.wait.until(EC.element_to_be_clickable((By.XPATH, self.ViewDetails))).click()
+
+        self.checkstock = '//button[text()="Check stock"]'
+        self.stockCountry = '//select[@name="storeId"]'
+        self.AddToCart = '//button[text()="Add to cart"]'
+        self.quantity = '//select[@class="product-quantity"]'
+        self.ViewCart ='//a[text()="View cart"]'
+
+        self.changestock = self.wait.until(EC.element_to_be_clickable((By.XPATH, self.stockCountry)))
+        self.selectstock = Select(self.changestock)
+        self.selectstock.select_by_index(1)
+        time.sleep(2)
+
+        self.changequantity = self.wait.until(EC.element_to_be_clickable((By.XPATH, self.quantity)))
+        self.selectquantity = Select(self.changequantity)
+        self.selectquantity.select_by_index(5)
+        time.sleep(2)
+
+        self.wait.until(EC.element_to_be_clickable((By.XPATH, self.AddToCart))).click()
+
 
     @pytest.mark.product
 
